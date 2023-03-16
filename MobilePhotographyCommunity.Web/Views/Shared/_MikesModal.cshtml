@@ -1,0 +1,158 @@
+﻿@using MobilePhotographyCommunity.Common
+<!-- The Modal -->
+<div class="mikes-modal" id="myModal">
+    <img class="img-modal" src="">
+    <div class="detail-post">
+        <div class="auth">
+            <a href="">
+                <img class="user-avt" id="avt-auth-modal" src="" alt="">
+                <h3 class="auth-name" id="auth-name-modal" style="display: inline;"></h3>
+            </a>
+            <div class="created-date" id="created-date-modal"></div>
+        </div>
+        <div class="content">
+            <div class="post-caption" id="post-caption-modal"></div>
+        </div>
+        <div class="count-liked-commented" style="margin-top: 10px">
+            <a href="#" style="float:left" id="count-like"> </a>
+            <a href="#" style="float:right" id="count-comment"> </a>
+        </div>
+        <div class="post-action" style="clear:both">
+            <div class="row" style="text-align: center;">
+                <div class="col-xs-4"><a class="btn"><i class="fal fa-thumbs-up"></i> Thích</a></div>
+                <div class="col-xs-4">
+                    <a class="btn"><i class="fal fa-comment-alt"></i> Bình luận</a>
+                </div>
+                <div class="col-xs-4">
+                    <a class="btn"><i class="fal fa-share-square"></i> Chia sẻ</a>
+                </div>
+            </div>
+        </div>
+        <div class="comment-box" id="comment-box-modal">
+            <div class="my-comment d-flex">
+                <div class="f-grow-1" style="flex-grow: 1; padding-left: 5px">
+                    <a href="/Account/UserProfile/@Session[UserSession.UserId]">
+                        <img class="user-avt" src="~/UploadImage/Avatar/@Session[UserSession.Avatar]" alt="">
+                    </a>
+                </div>
+                <div class="f-grow-15" style="flex-grow: 15; padding-top: 7px">
+
+                    <div class="form-group" style="position: relative">
+                        <input type="text" name="" id="" placeholder="Viết bình luận..."
+                               class="comment-content-inp form-control">
+                        <a class="btn btn-primary btn-send-comment" style="position: absolute; top: 0; right: 0;">Đăng</a>
+                    </div>
+                </div>
+            </div>
+            <div class="other-comment-modal">
+
+            </div>
+            @*<div class="other-comment">
+                    <div class="commentedby">
+                        <a href="#">
+                            <img class="user-avt" src="~/Assets/client/img/user/hieuxt.png" alt="">
+                            <h4 class="name" style="display: inline;">Thái Xuân Hiếu</h4>
+                            <div class="commented-time">2 tuần</div>
+                        </a>
+                    </div>
+                    <div class="comment-content">
+                        <span>Quá đẹp</span>
+                    </div>
+                </div>
+                <div class="other-comment">
+                    <div class="commentedby">
+                        <a href="#">
+                            <img class="user-avt" src="~/Assets/client/img/user/anpon.jpg" alt="">
+                            <h4 class="name" style="display: inline;">An Pon</h4>
+                            <div class="commented-time">2 tuần</div>
+                        </a>
+                    </div>
+                    <div class="comment-content">
+                        <span>Đây, đây là đỉnh cao</span>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<script>
+    var img = $(".img-modal")
+    $(".photo").each(function (index) {
+        $(this).off("click").on("click", function () {
+            $("#myModal").mikesModal();
+            img.attr("src", $(this).attr("src"));
+            var postId = $(this).data("id");
+            $.ajax({
+                type: "GET",
+                url: "/Post/ShowPost",
+                data: {
+                    postId: postId,
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.status) {
+                        var data = response.data;
+                        $("#auth-name-modal").text(data.User.FirstName + " " + data.User.LastName);
+                        $("#avt-auth-modal").attr("src", "/UploadImage/Avatar/" + data.User.Avatar);
+                        $("#post-caption-modal").text(data.Caption);
+                        $("#created-date-modal").text(GetDate(data.CreatedTime));
+                        if (data.Likes.length <= 0 || data.Comments.length <= 0) {
+
+                        } else {
+                            $("#count-like").text(data.Likes.length + " Thích");
+                            $("#count-comment").text(data.Comments.length + " Bình luận");
+                        }
+                        
+                        var otherComment = "";
+                        $.each(data.Comments, function (i, item) {
+                            otherComment += "<div class='other-comment'>"
+                                +"<div class='detail-comment'> "
+                                    + "<div class='commentedby'>"
+                                        + "<a href='/Account/UserProfile/" + item.User.UserId + "'>"
+                                            + "<img class='user-avt' src='/UploadImage/Avatar/" + item.User.Avatar + "' alt=''>"
+                                        + "</a>"
+                                    + "</div>"
+                                    + "<div class='comment-content'>"
+                                + "<a href='/Account/UserProfile/" + item.User.UserId + "'><h4 class='name'>" + " " + item.User.FirstName + " " + item.User.LastName + "</h4></a>"
+                                            + "<span>" + item.Content + "</span>"
+                                    + "</div>"
+                                + "</div>"
+                                +"<div class='action-comment'>"
+                                        +"<span>Thích</span>"
+                                        + "<span>&nbsp;·&nbsp;Trả lời</span>"
+                                        + "<span>&nbsp;·&nbsp;" + GetDate(item.CreatedTime) + "</span>"
+                                +"</div>"
+                                + "<div class='comment-option' style='position: absolute; right: 0px; top: 15px;'>"
+                                    + "<div class='dropdown post-option' style='float: right;'>"
+                                        +"<a class='dropdown-toggle' data-toggle='dropdown' style='color:black'>"
+                                            +"<i class='fal fa-ellipsis-v fa-2x'></i>"
+                                        +"</a>"
+                                        +"<ul class='dropdown-menu dropdown-menu-right'>"
+                                            +"<li><a href='#'><i class='fal fa-edit'></i> Chỉnh sửa</a></li>"
+                                            +"<li><a href='#'><i class='fal fa-trash-alt'></i> Xóa</a></li>"
+                                        +"</ul>"
+                                    +"</div>"
+                                + "</div>"
+                            +"</div>"
+                        });
+                        $("#comment-box-modal").append($(".other-comment-modal").html(otherComment));
+                    }
+                }
+            });
+        });
+    });
+
+    function GetDate(createdTime) {
+        var today = new Date(parseInt(createdTime.replace('/Date(', '').replace(')/', '')));
+        var month = today.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var day = today.getDate();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var year = today.getFullYear();
+        return day + "/" + month + "/" + year;
+    }
+</script>

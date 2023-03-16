@@ -1,0 +1,147 @@
+﻿@using MobilePhotographyCommunity.Data.ViewModel
+@model IEnumerable<PostViewModel>
+@{
+    ViewBag.Title = "Quản lý bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content px-4">
+    <h1 class="title-content">Bài viết</h1>
+
+    @if (ViewBag.Message != null)
+    {
+        <div id="msgAlert" class="alert alert-success" role="alert" style="margin-top: 20px;">
+            <i class="fas fa-check"></i> @ViewBag.Message
+        </div>
+    }
+    <div class="row pt-2">
+        <div class="col-md-4 form-group">
+            <form action="/Admin/Post/SortPost" method="post" id="form-sort-post">
+                <select class="form-control" name="type" id="sort-post">
+                    <option value="0">--Sắp xếp--</option>
+                    <option value="1">Lượt tương tác cao nhất</option>
+                    <option value="2">Lượt tương tác thấp nhất</option>
+                    <option value="3">Ngày thêm mới nhất</option>
+                    <option value="4">Ngày thêm cũ nhất</option>
+                </select>
+            </form>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-4">
+            <div class="search-box float-right">
+                <form action="" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="list-category">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th width="190px">Tiêu đề</th>
+                    <th width="190px">Số Like</th>
+                    <th width="190px">Số Comment</th>
+                    <th width="200px">Người tạo</th>
+                    <th width="105px">Ngày tạo</th>
+                    <th width="90px"><input type="checkbox" name="" id=""> Chọn</th>
+                    <th width="180px">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Caption</td>
+                        <td>@item.Likes.Count() <i class="fas fa-thumbs-up" style="color:dodgerblue"></i></td>
+                        <td>@item.Comments.Count() <i class="fas fa-comment-alt" style="color:gray"></i></td>
+                        <td>
+                            <img src="~/UploadImage/Avatar/@item.User.Avatar" alt=""
+                                 style="width: 40px; height: 40px; border-radius: 50%;">
+                            <span>@item.User.FirstName @item.User.LastName</span>
+                        </td>
+                        <td>@Convert.ToDateTime(item.CreatedTime).ToString("dd/MM/yyyy hh:mm")</td>
+                        <td><input type="checkbox" name="" id=""></td>
+                        <td>
+                            @if (item.CategoryId != null)
+                            {
+                                <a href="~/Category/Detail/@item.CategoryId#@item.PostId" class="btn btn-info" target="_blank" title="Chi tiết"><i class="fal fa-info"></i></a>
+                            }
+                            else
+                            {
+                                <a href="~/Home/Index#@item.PostId" class="btn btn-info" target="_blank" title="Chi tiết"><i class="fal fa-info"></i></a>
+                            }
+                            <a data-toggle="modal" data-target="#delete-@item.PostId" class="btn btn-danger" title="Xóa"><i class="fal fa-trash-alt"></i></a>
+
+                        </td>
+                    </tr>
+                    <!-- The Modal -->
+                    <div class="modal fade" id="delete-@item.PostId">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Xác nhận</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    Xóa bài viết này?
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <a href="/Admin/Post/Delete/@item.PostId" class="btn btn-success">Đồng ý</a>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+    @if (ViewBag.PageNum % 2 == 0)
+    {
+        <ul class="pagination">
+            @for (int i = 0; i < ViewBag.PageNum / 5; i++)
+            {
+                <li class="page-item"><a class="page-link" href="@Url.Action("Index", "/Post", new { pageIndex = i, pageSize = 5 })">@(i + 1)</a></li>
+            }
+        </ul>
+    }
+    else
+    {
+        <ul class="pagination">
+            @for (int i = 0; i < (ViewBag.PageNum / 5) + 1; i++)
+            {
+                <li class="page-item"><a class="page-link" href="@Url.Action("Index", "/Post", new { pageIndex = i, pageSize = 5 })">@(i + 1)</a></li>
+            }
+        </ul>
+    }
+
+</div>
+
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+    <script src="~/Scripts/controller/admin/post.js"></script>
+}
+

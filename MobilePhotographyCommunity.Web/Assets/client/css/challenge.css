@@ -1,0 +1,125 @@
+﻿.col-left,
+.col-center,
+.col-right {
+    margin-top: 220px;
+}
+
+.rankings-box {
+    border-radius: 5px;
+}
+
+.rankings-box {
+    padding: 10px 10px 0px 10px;
+}
+
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 600px) {
+
+    span.close-description {
+        position: absolute;
+        width: 24px;
+        left: 5px;
+    }
+
+    .frame-created-by.bg-white {
+        float: none;
+        margin-right: 0px;
+    }
+}
+
+/* challenge */
+.description-challenge {
+    width: 100%;
+    position: fixed;
+    z-index: 1029;
+    top: 7%;
+    padding: 20px 0px 20px 20px;
+    background-image: radial-gradient(circle, #9716e1, #8608e8, #7100ef, #5300f7, #0b00ff);
+    border-radius: 0px 0px 15px 15px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
+}
+
+.frame-created-by {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    text-align: center;
+    padding: 5px;
+    float: right;
+    margin-right: 20px;
+}
+
+.description-challenge .created-by-challenge {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.rankings-box {
+    padding-bottom: 10px;
+    height: 500px;
+}
+
+    .rankings-box .overflow-auto {
+        height: 430px;
+        overflow: auto;
+    }
+
+    .rankings-box ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .rankings-box ul li {
+            display: block;
+            padding-bottom: 15px;
+        }
+
+            .rankings-box ul li a {
+                text-decoration: none;
+                font-size: 15px;
+            }
+
+                .rankings-box ul li a img {
+                    margin-right: 5px;
+                }
+
+                .rankings-box ul li a span.label {
+                    float: right;
+                    margin: 10px 0px;
+                    width: 70px;
+                }
+
+.date, .participants, .description-detail {
+    color: white;
+}
+
+.challenge-name h1 {
+    color: #fff41b;
+    margin-top: 10px;
+}
+
+.btn-join-now {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
+    background-color: #ffb700;
+}
+
+.close-description {
+    position: absolute;
+    top: 10px;
+    right: 80px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+    .close-description:hover,
+    .close-description:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }

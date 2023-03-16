@@ -1,0 +1,38 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Assets/client/fonts/fontawesome-pro-5.11.2-web/css/all.min.css">
+    <link rel="stylesheet" href="~/Assets/client/css/style.css">
+    <title>Đăng nhập</title>
+    <link rel="icon" href="~/Assets/client/img/page/icon-camera.jpg" type="image/gif">
+</head>
+
+<body>
+    <div class="main">
+        <div class="d-flex">
+            <div class="box-left home-phone">
+                <img src="~/Assets/client/img/page/bphone-camera.png" alt="" width="100%">
+            </div>
+            <div class="box-right bg-white">
+                <div class="logo" style="text-align: center;">
+                    <img src="~/Assets/client/img/page/logo.png" alt="" style="width: 150px; height: 50px;">
+                </div>
+                @Html.Partial("_LoginPartial")
+                <hr>
+                @Html.Partial("_SignupPartial")
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
