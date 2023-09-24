@@ -122,7 +122,7 @@ body {
     padding: 10px 10px 0px 10px;
 }
 
-.col-left {
+/*.col-left {
     padding: 0px;
     position: fixed;
     width: 285px;
@@ -138,7 +138,7 @@ body {
     position: fixed;
     right: 175px;
     width: 285px;
-}
+}*/
 
 .challenge-box a {
     text-decoration: none;
