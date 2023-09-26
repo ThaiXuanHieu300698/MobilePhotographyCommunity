@@ -122,23 +122,31 @@ body {
     padding: 10px 10px 0px 10px;
 }
 
-/*.col-left {
-    padding: 0px;
-    position: fixed;
-    width: 285px;
+.write {
+    display: flex;
+    flex-direction: row;
+    padding: 0px 15px;
+}
+
+.grid {
+    display: grid;
+    grid-template-areas: 'left center right';
+    grid-gap: 15px;
+}
+
+.col-left {
+    grid-area: left;
+    max-width: 285px;
 }
 
 .col-center {
-    position: relative;
-    left: 292px;
+    grid-area: center;
 }
 
 .col-right {
-    padding: 0px;
-    position: fixed;
-    right: 175px;
-    width: 285px;
-}*/
+    grid-area: right;
+    max-width: 285px;
+}
 
 .challenge-box a {
     text-decoration: none;
@@ -668,4 +676,15 @@ label {
     cursor: pointer;
     padding: 15px;
     border-radius: 4px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.overflow-auto::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.overflow-auto {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
