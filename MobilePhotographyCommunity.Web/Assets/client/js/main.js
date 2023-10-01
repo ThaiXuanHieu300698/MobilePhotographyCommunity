@@ -39,10 +39,13 @@ window.onscroll = function () {
 };
 
 function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
         btnScroll.style.display = "block";
+        const dis = document.documentElement.scrollTop;
+        $('.col-center').css('margin-top', 70 - dis);
     } else {
         btnScroll.style.display = "none";
+        $('.col-center').css('margin-top', 70);
     }
 }
 

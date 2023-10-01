@@ -688,3 +688,9 @@ label {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
+
+.col-left, .col-right {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 70px;
+}
